@@ -1,0 +1,213 @@
+/* Palette de couleurs */
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #f8f9fa;
+  --accent-color: #e07a5f; /* Rouge adouci */
+  --background-color: #121212;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --border-color: rgba(255, 255, 255, 0.2);
+  --hover-color: #f4a261; /* Orange pastel plus doux */
+  --shadow-color: rgba(224, 122, 95, 0.3); /* Ombre accordée à l'accent */
+}
+
+/* Réinitialisation et typographie */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(to top, #f8cdda, #1d2b64); /* Dégradé ciel */
+  color: var(--primary-color);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-attachment: fixed;
+}
+
+.banner {
+  background-image: url("/home/becode/myproject/MountainBookstore/src/assets/banner.png"), linear-gradient(to bottom, rgba(18, 18, 18, 0.7), rgba(255, 255, 255, 0));
+  background-size: cover;
+  background-position: bottom;
+  width: 1215px;
+  height: 70px;
+}
+
+/* Conteneur principal */
+#events {
+  max-width: 1200px;
+  margin: 0px auto;
+  padding: 20px;
+}
+
+/* Titre principal */
+h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  padding-top: 5px;
+  display: inline-block;
+  -webkit-text-stroke: 2px black; /* Épaisseur et couleur du contour */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
+  justify-content: center; /* Centre les éléments sur petits écrans */
+}
+
+.create-event-button {
+  margin-left: auto; /* Pousse le bouton à droite */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+/* Grille des cartes */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+  margin-top: 20px;
+}
+
+/* Style des cartes */
+.event-card {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  text-align: left;
+}
+
+.event-card.logo {
+  align-items: center;
+}
+
+.event-card:hover {
+  transform: scale(1.02);
+}
+
+/* Titres des événements */
+.event-card h2 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: var(--accent-color);
+  box-shadow: 0 2px 20px var(--shadow-color);
+}
+
+.event-card p {
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
+
+/* Boutons */
+button {
+  margin-left: 20px;
+}
+
+/* Lien stylisé */
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--hover-color);
+}
+
+/* Liste des participants */
+.participant-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  box-shadow: 0 2px 20px var(--shadow-color);
+}
+
+.participant-container h2 {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--accent-color);
+  display: inline-block;
+}
+
+/* Grille des participants */
+.participant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Carte d'un participant */
+.participant-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.participant-card:hover {
+  transform: scale(1.02);
+}
+
+/* Nom du participant */
+.participant-card strong {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+/* Liste des événements du participant */
+.event-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-list li {
+  background: rgba(255, 255, 255, 0.1);
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    gap: 10px;
+  }
+}
