@@ -71,10 +71,16 @@ const CreateEvent = () => {
 
   return (
     <div className="container">
-      <h2>Créer un projet</h2>
+      <h2>Create a project</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="eventName">Nom :</label>
+          <label htmlFor="author">Author :</label>
+          <input type="text" id="author" value={author} onChange={(e) => setAuthor(sanitizeInput(e.target.value))} className={isSubmitting && !author.trim() ? "input-error" : ""} />
+          {isSubmitting && !author.trim() && <p className="error-message">Le nom de l'auteur est obligatoire</p>}
+        </div>
+
+        <div>
+          <label htmlFor="eventName">Title :</label>
           <input type="text" id="eventName" value={name} onChange={(e) => setName(sanitizeInput(e.target.value))} className={isSubmitting && !name.trim() ? "input-error" : ""} />
           {isSubmitting && !name.trim() && <p className="error-message">Le nom de l'événement est obligatoire</p>}
         </div>
@@ -85,16 +91,10 @@ const CreateEvent = () => {
           {isSubmitting && !description.trim() && <p className="error-message">La description est obligatoire</p>}
         </div>
 
-        <div>
-          <label htmlFor="author">Auteur :</label>
-          <input type="text" id="author" value={author} onChange={(e) => setAuthor(sanitizeInput(e.target.value))} className={isSubmitting && !author.trim() ? "input-error" : ""} />
-          {isSubmitting && !author.trim() && <p className="error-message">Le nom de l'auteur est obligatoire</p>}
-        </div>
-
         <div className="buttons">
-          <button type="submit">Créer</button>
+          <button type="submit">Create</button>
           <Link to="/">
-            <button className="button">Annuler</button>
+            <button className="button">Cancel</button>
           </Link>
         </div>
       </form>

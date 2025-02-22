@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
+import "./Loading.css";
 
 function Home() {
   const baseURL = "https://didlydoo-at29.onrender.com";
@@ -90,7 +91,29 @@ function Home() {
       });
   }, []);
 
-  if (loading) return <p>Loading in progress...</p>;
+  if (loading)
+    return (
+      <div id="loader">
+        <div class="spinner-container">
+          <svg class="text-circle" viewBox="0 0 100 100">
+            <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" stroke="transparent" fill="none" />
+            <text stroke="black" stroke-width="2" fill="transparent">
+              {/*Contour du texte*/}
+              <textPath href="#circlePath" startOffset="0%">
+                LOADING...
+              </textPath>
+            </text>
+            {/*Texte coloré au-dessus*/}
+            <text fill="white">
+              <textPath href="#circlePath" startOffset="0%">
+                LOADING...
+              </textPath>
+            </text>
+          </svg>
+          <div class="spinner"></div>
+        </div>
+      </div>
+    );
 
   if (error) return <p>Erreur: {error.message}</p>;
 
@@ -98,7 +121,6 @@ function Home() {
     <>
       <div id="event-card" className="banner">
         <div className="header">
-          {/*<img src={Logo} className="logo" alt="DidlyDoo" />*/}
           <h1>Mountain Bookstore</h1>
           <Link to="/api/event">
             <button className="create-event-button">Add a project</button>

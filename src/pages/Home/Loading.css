@@ -1,0 +1,79 @@
+/* Loader en plein écran */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("/clouds.jpg") repeat-y;
+  opacity: 0.5;
+  animation: moveClouds 800s linear infinite;
+}
+
+@keyframes moveClouds {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+
+/* Conteneur du spinner et du texte */
+.spinner-container {
+  position: relative;
+  width: 210px;
+  height: 210px;
+}
+
+/* Cercle de texte */
+.text-circle {
+  width: 195px;
+  height: 195px;
+  font-size: 18px;
+  letter-spacing: 2px; /* Espacement pour un effet plus "pro" */
+  font-family: sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-text-stroke: 1px black; /* Épaisseur et couleur du contour */
+  animation: rotateText 10s linear infinite;
+}
+
+/* Animation du texte qui tourne */
+@keyframes rotateText {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation du spinner */
+.spinner {
+  width: 120px;
+  height: 120px;
+  border: 6px solid rgba(255, 255, 255, 0.856);
+  border-top: 6px solid #4836ad;
+  border-radius: 50%;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  animation: spin 1.5s linear reverse infinite;
+}
+
+/* Rotation du spinner */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
