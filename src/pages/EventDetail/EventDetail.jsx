@@ -299,21 +299,21 @@ const EventDetail = () => {
       {modif ? (
         // Mode modification
         <div className="event-card-no-scale">
-          <h2>Modifier l'événement</h2>
+          <h2>Modifier le projet</h2>
           <form onSubmit={handleSubmitModif} className="form-modif">
             <div className="form-group">
-              <label htmlFor="eventName">Nom de l'événement :</label>
+              <label htmlFor="eventName">Nom :</label>
               <input type="text" id="eventName" value={name} onChange={(e) => setName(sanitizeInput(e.target.value))} className={isSubmitting && !name.trim() ? "input-error" : ""} />
               {isSubmitting && !name.trim() && <p className="error-message">Le nom de l'événement est obligatoire</p>}
             </div>
             <div className="form-group">
               <label htmlFor="description">Description :</label>
-              <textarea id="description" value={description} onChange={(e) => setDescription(sanitizeInput(e.target.value))} className={isSubmitting && !description.trim() ? "input-error" : ""} />
+              <textarea id="description" rows="15" value={description} onChange={(e) => setDescription(sanitizeInput(e.target.value))} className={isSubmitting && !description.trim() ? "input-error" : ""} />
               {isSubmitting && !description.trim() && <p className="error-message">La description est obligatoire</p>}
             </div>
             <div className="form-group">
               <label htmlFor="author">Auteur :</label>
-              <textarea value={author} id="author" onChange={(e) => setAuthor(sanitizeInput(e.target.value))} className={isSubmitting && !author.trim() ? "input-error" : ""} />
+              <textarea value={author} rows="1" id="author" onChange={(e) => setAuthor(sanitizeInput(e.target.value))} className={isSubmitting && !author.trim() ? "input-error" : ""} />
               {isSubmitting && !author.trim() && <p className="error-message">Le nom de l'auteur est obligatoire</p>}
             </div>
             <div className="form-actions">
@@ -329,7 +329,7 @@ const EventDetail = () => {
         <div className="event-card-no-scale">
           <h1>{event.name}</h1>
           <button className="edit-event-button" onClick={() => setModif(true)}>
-            Modifier l'événement
+            Modifier le projet
           </button>
           <p>
             <strong>Auteur:</strong> {event.author}
@@ -374,50 +374,15 @@ const EventDetail = () => {
           )}
 */}
 
-          <div className="date-add">
-            <h3 style={{ textAlign: "center" }}>Ajouter une date</h3>
-            <div className="input-button-container">
-              {/* Conteneur pour l'input et les messages d'erreur */}
-              <div className="input-wrapper">
-                <input type="date" value={dateInput} onChange={(e) => setDateInput(e.target.value)} onKeyDown={(e) => e.preventDefault()} />
-                {isSubmittingNewDate && !dateInput.trim() && (
-                  <p className="error-message" style={{ textAlign: "center" }}>
-                    Entrez une date valide
-                  </p>
-                )}
-                {isSubmittingNewDate && dateInput.trim() && new Date(dateInput) < new Date() && (
-                  <p className="error-message" style={{ textAlign: "center" }}>
-                    La date ne peut pas être antérieure à aujourd'hui
-                  </p>
-                )}
-              </div>
-              {/* Bouton placé à côté, aligné en haut */}
-              <button onClick={handleAddDate}>Ajouter</button>
-            </div>
-          </div>
-
-          <h3 style={{ textAlign: "center" }}>Participants</h3>
+          <h3 style={{ textAlign: "center" }}>Candidats</h3>
 
           <div className="participant-section">
             {Array.isArray(event.dates) && event.dates.length > 0 ? (
               <table className="participant-table" cellPadding="5">
                 <thead>
                   <tr>
-                    <th>Participant</th>
-                    {event.dates.map((date, index) => (
-                      <th
-                        key={index}
-                        style={{
-                          color: event.dates.some((d) => d.attendees.length > 0) && date.date === bestDate?.date ? "lime" : "white",
-                        }}
-                      >
-                        {new Date(date.date).toLocaleDateString(navigator.language)}
-                        <button className="buttonX" type="button" onClick={(e) => handleDeleteEvenDate(event.id, date.date, e)}>
-                          X
-                        </button>
-                      </th>
-                    ))}
-                    {!editingAttendee && <th colSpan="2">Action</th>}
+                    <th>Candidat</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -437,7 +402,7 @@ const EventDetail = () => {
                     if (attendeesMap.size === 0) {
                       return (
                         <tr>
-                          <td colSpan={event.dates.length + 2}>Aucun participant</td>
+                          <td colSpan={event.dates.length + 1}>Aucun candidat</td>
                         </tr>
                       );
                     }
@@ -454,30 +419,12 @@ const EventDetail = () => {
                           </td>
                         ))}
 
-                        {!editingAttendee && (
-                          <>
+          
                             <td>
                               <button type="button" onClick={(e) => handleDeleteAttendee(id, name, e)}>
                                 Supprimer
                               </button>
                             </td>
-
-                            <td>
-                              <button
-                                onClick={() =>
-                                  handleEditAttendee({
-                                    name,
-                                    dates: Object.entries(availability)
-                                      .filter(([, available]) => available)
-                                      .map(([date]) => date),
-                                  })
-                                }
-                              >
-                                Modifier
-                              </button>
-                            </td>
-                          </>
-                        )}
                       </tr>
                     ));
                   })()}
@@ -487,47 +434,19 @@ const EventDetail = () => {
               <p>Aucune date disponible</p>
             )}
           </div>
-          {editingAttendee && (
-            <div className="edit-attendee">
-              <h3>Modifier les choix de {attendeeNameForChangingDates}</h3>
-              <div className="checkbox-group">
-                {event.dates.map((date, index) => (
-                  <label key={index}>
-                    <input type="checkbox" value={date.date} checked={attendeeDates.includes(date.date)} onChange={() => setAttendeeDates((prev) => (prev.includes(date.date) ? prev.filter((d) => d !== date.date) : [...prev, date.date]))} />
-                    {new Date(date.date).toLocaleDateString(navigator.language)}
-                  </label>
-                ))}
-              </div>
-              {isSubmittingModifChoices && attendeeDates.length === 0 && <p className="error-message">Une date au minimum est obligatoire</p>}
-              <div className="edit-buttons">
-                <button onClick={handleUpdateAttendee}>Mettre à jour</button>
-                <button onClick={() => setEditingAttendee(null)}>Annuler</button>
-              </div>
-            </div>
-          )}
-
+         
           {/* Affichage du formulaire seulement si des dates sont disponibles */}
           {event.dates && event.dates.length > 0 && (
             <div className="attendee-form">
-              <h3>Ajouter un participant</h3>
+              <h3>Ajouter un candidat</h3>
               <form onSubmit={handleAddAttendee}>
                 <label>
-                  Nom du participant:
+                  Nom :
                   <input type="text" value={attendeeNameForAdd} onChange={(e) => setAttendeeNameForAdd(e.target.value)} />
                   {isSubmitting && !attendeeNameForAdd && <p className="error-message">Le nom est obligatoire</p>}
                 </label>
-                <div className="availability">
-                  <p>Sélectionnez vos disponibilités :</p>
-                  {event.dates.map((date, index) => (
-                    <label key={index}>
-                      <input type="checkbox" checked={selectedDates.some((d) => d.date === date.date && d.available)} onChange={() => toggleDateSelection(date.date)} />
-                      {new Date(date.date).toLocaleDateString(navigator.language)}
-                    </label>
-                  ))}
-                  {isSubmitting && selectedDates.length === 0 && <p className="error-message">Une date au minimum est obligatoire</p>}
-                </div>
                 <div className="button-group">
-                  <button type="submit">Ajouter un participant</button>
+                  <button type="submit">Ajouter un candidat</button>
                   <button type="button" onClick={handleCancelAddAttendee}>
                     Effacer
                   </button>

@@ -109,7 +109,6 @@ function Home() {
           {events.length > 0 ? (
             events.map((event) => (
               <div key={event.id} className="event-card">
-               
                 <h2>
                   <Link to={`/api/events/${event.id}`}>{event.name.length > 16 ? event.name.slice(0, 16) + "..." : event.name}</Link>
                 </h2>

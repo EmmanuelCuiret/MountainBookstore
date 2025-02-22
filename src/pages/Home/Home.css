@@ -5,7 +5,7 @@
   --background-color: #121212;
   --card-bg: rgba(255, 255, 255, 0.05);
   --border-color: rgba(255, 255, 255, 0.2);
-  --accent-color: #5c6bc0; 
+  --accent-color: #5c6bc0;
   --hover-color: #7986cb;
   --shadow-color: rgba(92, 107, 192, 0.3);
 }
@@ -31,6 +31,7 @@ body::before {
   background: url("/home/becode/myproject/MountainBookstore/src/assets/clouds.jpg") repeat-y;
   opacity: 0.3;
   animation: moveClouds 800s linear infinite;
+  z-index: -1;
 }
 
 @keyframes moveClouds {
@@ -79,7 +80,6 @@ h1 {
   display: block !important;
   visibility: visible !important;
   position: relative !important;
-  z-index: 1000 !important;
   background-color: #4836ad !important; /* Couleur temporaire pour bien le voir */
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
