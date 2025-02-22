@@ -91,7 +91,7 @@ function Home() {
       });
   }, []);
 
-  if (loading) return <p>Chargement des projets...</p>;
+  if (loading) return <p>Loading in progress...</p>;
 
   if (error) return <p>Erreur: {error.message}</p>;
 
@@ -102,7 +102,7 @@ function Home() {
           {/*<img src={Logo} className="logo" alt="DidlyDoo" />*/}
           <h1>Mountain Bookstore</h1>
           <Link to="/api/event">
-            <button className="create-event-button">Ajouter un projet</button>
+            <button className="create-event-button">Add a project</button>
           </Link>
         </div>
         <div className="event-grid">
@@ -112,12 +112,12 @@ function Home() {
                 <h2>
                   <Link to={`/api/events/${event.id}`}>{event.name.length > 16 ? event.name.slice(0, 16) + "..." : event.name}</Link>
                 </h2>
-                <p>Candidats : {getTotalParticipants(event)}</p>
-                <button onClick={() => handleRemoveEvent(event)}>Effacer</button>
+                <p>Candidates : {getTotalParticipants(event)}</p>
+                <button onClick={() => handleRemoveEvent(event)}>Delete</button>
               </div>
             ))
           ) : (
-            <p>Aucun événement trouvé.</p>
+            <p>No projects found.</p>
           )}
         </div>
       </div>
