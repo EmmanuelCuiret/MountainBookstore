@@ -31,17 +31,17 @@ function Home() {
 
   //Suppression d'un événement
   const handleRemoveEvent = async (eventToRemove) => {
-    const confirmDelete = window.confirm(`Etes-vous sûr de vouloir supprimer l'événement :\n"${eventToRemove.name}" ?`);
+    const confirmDelete = window.confirm(`Etes-vous sûr de vouloir supprimer le projet ? :\n"${eventToRemove.name}" ?`);
 
     if (!confirmDelete) return; //Annuler la suppression de l'événement si l'utilisateur clique sur Annuler
     try {
       const routeURL = `/api/events/${eventToRemove.id}`;
       await axios.delete(baseURL + routeURL);
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventToRemove.id));
-      //alert("Événement supprimé avec succès !");
+      //alert("Projet supprimé avec succès !");
     } catch (error) {
-      console.error("Erreur lors de la suppression de l'événement: ", error);
-      alert("Impossible de supprimer l'événement.");
+      console.error("Erreur lors de la suppression du projet: ", error);
+      alert("Impossible de supprimer le projet.");
     }
   };
 
@@ -91,7 +91,7 @@ function Home() {
       });
   }, []);
 
-  if (loading) return <p>Chargement des événements...</p>;
+  if (loading) return <p>Chargement des projets...</p>;
 
   if (error) return <p>Erreur: {error.message}</p>;
 
@@ -109,7 +109,7 @@ function Home() {
           {events.length > 0 ? (
             events.map((event) => (
               <div key={event.id} className="event-card">
-                <p>{new Date(event.created_at).toLocaleDateString()}</p>
+               
                 <h2>
                   <Link to={`/api/events/${event.id}`}>{event.name.length > 16 ? event.name.slice(0, 16) + "..." : event.name}</Link>
                 </h2>
@@ -124,6 +124,7 @@ function Home() {
       </div>
 
       <br />
+      {/*
       <Link to="#" onClick={handleShowAttendeeAndEvents}>
         {showAttendees ? "Masquer la liste" : "Voir les candidatures"}
       </Link>
@@ -152,6 +153,7 @@ function Home() {
           )}
         </div>
       )}
+        */}
     </>
   );
 }

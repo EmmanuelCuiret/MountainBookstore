@@ -2,12 +2,12 @@
 :root {
   --primary-color: #ffffff;
   --secondary-color: #f8f9fa;
-  --accent-color: #e07a5f; /* Rouge adouci */
   --background-color: #121212;
   --card-bg: rgba(255, 255, 255, 0.05);
   --border-color: rgba(255, 255, 255, 0.2);
-  --hover-color: #f4a261; /* Orange pastel plus doux */
-  --shadow-color: rgba(224, 122, 95, 0.3); /* Ombre accordée à l'accent */
+  --accent-color: #5c6bc0; 
+  --hover-color: #7986cb;
+  --shadow-color: rgba(92, 107, 192, 0.3);
 }
 
 /* Réinitialisation et typographie */
@@ -19,6 +19,27 @@ body {
   padding: 0;
   text-align: center;
   background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/home/becode/myproject/MountainBookstore/src/assets/clouds.jpg") repeat-y;
+  opacity: 0.3;
+  animation: moveClouds 800s linear infinite;
+}
+
+@keyframes moveClouds {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
 }
 
 .banner {
@@ -54,7 +75,18 @@ h1 {
 }
 
 .create-event-button {
-  margin-left: auto; /* Pousse le bouton à droite */
+  top: 1px;
+  display: block !important;
+  visibility: visible !important;
+  position: relative !important;
+  z-index: 1000 !important;
+  background-color: #4836ad !important; /* Couleur temporaire pour bien le voir */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.create-event-button:hover {
+  background-color: #4836ad !important; /* Vert plus foncé au survol */
+  transform: scale(1.02); /* Légère augmentation de taille */
 }
 
 .header-container {
@@ -76,12 +108,16 @@ h1 {
 
 /* Style des cartes */
 .event-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
   position: relative;
-  background: var(--card-bg);
-  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(63, 118, 168, 0.9) 0%, rgba(126, 157, 219, 0.5) 50%, rgba(169, 202, 233, 0.7) 100%) !important;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border-color);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   padding: 20px;
   text-align: left;
@@ -91,16 +127,10 @@ h1 {
   align-items: center;
 }
 
-.event-card:hover {
-  transform: scale(1.02);
-}
-
 /* Titres des événements */
 .event-card h2 {
   font-size: 1.5rem;
-  margin: 10px 0;
   color: var(--accent-color);
-  box-shadow: 0 2px 20px var(--shadow-color);
 }
 
 .event-card p {
@@ -113,11 +143,18 @@ button {
   margin-left: 20px;
 }
 
+button:hover {
+  background-color: #4836ad !important; /* Vert plus foncé au survol */
+  transform: scale(1.03); /* Légère augmentation de taille */
+}
+
 /* Lien stylisé */
 a {
   color: var(--accent-color);
   text-decoration: none;
   font-weight: bold;
+  z-index: 1000;
+  position: relative;
   transition: color 0.3s ease;
 }
 

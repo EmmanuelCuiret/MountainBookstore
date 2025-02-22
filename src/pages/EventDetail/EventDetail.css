@@ -1,12 +1,12 @@
 /* Palette de couleurs */
 :root {
-  --primary-color: #ffffff;
-  --secondary-color: #f8f9fa;
-  --accent-color: #ff3e00;
-  --background-color: #121212;
+  --primary-color: #c5f5cb;
+  --secondary-color: #b0dcff;
+  --accent-color: #4836ad;
+  --background-color: #1f1e1e;
   --card-bg: rgba(255, 255, 255, 0.05);
   --border-color: rgba(255, 255, 255, 0.2);
-  --hover-color: #ff784f;
+  --hover-color: #4836ad;
   --shadow-color: rgba(255, 62, 0, 0.3);
 }
 
@@ -34,12 +34,11 @@ body {
   border-radius: 10px;
   padding: 20px;
   border: 1px solid var(--border-color);
-  /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: left;
   margin-bottom: 5px;
-  box-shadow: 0 2px 20px var(--shadow-color);
+
 }
 
 /* Titres dans la carte d'événement */
