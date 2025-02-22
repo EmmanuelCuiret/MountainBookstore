@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
-import Logo from "../../assets/logo.png";
 
 function Home() {
   const baseURL = "https://didlydoo-at29.onrender.com";
