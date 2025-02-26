@@ -5,8 +5,8 @@ import "./Home.css";
 import "./Loading.css";
 
 function Home() {
-  //const baseURL = "https://mountain-djyn.onrender.com";
-  const baseURL = "http://localhost:3000";
+  const baseURL = "https://mountain-djyn.onrender.com";
+  //const baseURL = "http://localhost:3000";
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
