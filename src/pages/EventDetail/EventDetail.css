@@ -45,6 +45,10 @@ body {
   background: linear-gradient(135deg, rgba(63, 118, 168, 0.9) 0%, rgba(126, 157, 219, 0.5) 50%, rgba(169, 202, 233, 0.7) 100%) !important;
 }
 
+.event-card-no-scale p:last-of-type {
+  margin-bottom: 0px; /* Ajuste la valeur selon l'espace souhaité */
+}
+
 /* Titres dans la carte d'événement */
 .event-card h1,
 .event-card h2 {
@@ -122,6 +126,13 @@ a:hover {
   flex-direction: row;
 }
 
+.form-actions {
+  display: flex;
+  justify-content: center; /* Centre les boutons horizontalement */
+  align-items: center; /* Aligne verticalement si nécessaire */
+  gap: 2.5px; /* Espace entre les boutons */
+}
+
 /* Style du formulaire de modification dans la carte */
 .form-modif {
   display: flex;
@@ -167,7 +178,7 @@ a:hover {
 }
 
 .error-message {
-  color: red;
+  color: #ffa600;
   font-size: 0.9rem;
   margin-top: 5px;
 }
@@ -294,10 +305,15 @@ a:hover {
   gap: 5px;
 }
 
+.link-event {
+  color: #bcdcf5;
+  -webkit-text-stroke: 1px #4836ad; /* Épaisseur et couleur du contour */
+}
+
 /* Lien retour */
 .back-link {
-  margin-top: 20px;
   font-size: 22px;
+  text-align: center;
 }
 
 .back-link a {

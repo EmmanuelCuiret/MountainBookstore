@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
-
 /* Réinitialisation et typographie */
 body {
   font-family: "Poppins", sans-serif;
@@ -97,9 +95,8 @@ body::before {
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
-  width: 290px;
+  width: 100%;
   position: relative;
-  background: linear-gradient(135deg, rgba(63, 118, 168, 0.9) 0%, rgba(126, 157, 219, 0.5) 50%, rgba(169, 202, 233, 0.7) 100%) !important;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border-color);
@@ -108,21 +105,21 @@ body::before {
   text-align: left;
 }
 
-.event-card.logo {
-  align-items: center;
-}
-
-/* Titres des événements */
-.event-card h2 {
-  font-size: 1.5rem;
-  color: var(--accent-color);
-}
-
 .event-card p {
   font-size: 1.1rem;
   color: #4836ad;
   font-weight: 800;
 }
+
+.link-event {
+  color: #bcdcf5;
+  -webkit-text-stroke: 1px #4836ad; /* Épaisseur et couleur du contour */
+}
+
+.link-event:hover {
+  color: #ffffff;
+}
+
 
 button:hover {
   background-color: #4836ad !important; /* Vert plus foncé au survol */

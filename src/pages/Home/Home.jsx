@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
 import "./Loading.css";
+import Swal from "sweetalert2";
 
 function Home() {
   const baseURL = "https://mountain-djyn.onrender.com";
@@ -31,9 +32,17 @@ function Home() {
 
   //Suppression d'un événement
   const handleRemoveEvent = async (eventToRemove) => {
-    const confirmDelete = window.confirm(`Etes-vous sûr de vouloir supprimer le projet ? :\n"${eventToRemove.name}" ?`);
+    const result = await Swal.fire({
+      title: "Are you sure ?",
+      text: "This action is irreversible !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, continue",
+      cancelButtonText: "No, cancel",
+    });
 
-    if (!confirmDelete) return; //Annuler la suppression de l'événement si l'utilisateur clique sur Annuler
+    if (!result.isConfirmed) return;
+
     try {
       const routeURL = `/api/events/${eventToRemove.id}`;
       await axios.delete(baseURL + routeURL);
@@ -129,13 +138,16 @@ function Home() {
         <div className="event-grid">
           {events.length > 0 ? (
             events.map((event) => (
-              <div key={event.id} className="event-card" >
-                <h2>
-                  <Link to={`/api/events/${event.id}`}>{event.name.length > 16 ? event.name.slice(0, 16) + "..." : event.name}</Link>
-                </h2>
-                <p>Candidates : {getTotalParticipants(event)}</p>
-                <button onClick={() => handleRemoveEvent(event)}>Delete</button>
-              </div>
+              <div key={event.id} className="event-card">
+              <h2>
+                <Link to={`/api/events/${event.id}`} className="link-event">
+                  {event.name.length > 16 ? event.name.slice(0, 16) + "..." : event.name}
+                </Link>
+              </h2>
+              <p>Author : {event.author}</p>
+              <p>Candidates : {getTotalParticipants(event)}</p>
+              <button onClick={() => handleRemoveEvent(event)}>Delete</button>
+            </div>
             ))
           ) : (
             <p>No projects found.</p>
@@ -143,15 +155,15 @@ function Home() {
         </div>
         <Link to="#" onClick={handleShowAttendeeAndEvents}>
         <br/>
-        {showAttendees ? "Masquer la liste" : "Voir les candidatures"}
+        {showAttendees ? "Hide list" : "View applications"}
         </Link>
 
         {showAttendees && (
           <div className="participant-container">
-            <h2>Liste des candidatures</h2>
+            <h2>List of applications</h2>
 
             {loadingAttendees ? (
-              <p>Chargement des candidats...</p>
+              <p>Loading candidates...</p>
             ) : attendeesAndEvents.length > 0 ? (
               <div className="participant-grid">
                 {attendeesAndEvents.map((a, index) => (
@@ -166,7 +178,7 @@ function Home() {
                 ))}
               </div>
             ) : (
-              <p>Aucun candidat.</p>
+              <p>No candidates.</p>
             )}
           </div>
         )}

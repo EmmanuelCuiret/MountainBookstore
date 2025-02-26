@@ -113,16 +113,17 @@ const EventDetail = () => {
       return;
     }
 
-    // Demande de confirmation avec SweetAlert2
-    const result = await Swal.fire({
-      title: "Confirmer l'ajout",
+     // Demande de confirmation avec SweetAlert2
+     const result = await Swal.fire({
+      title: "Confirm addition",
       html: `
-        <p>Ajouter ce participant ?</p>
-        <strong>Nom :</strong> "${attendeeNameForAdd}"<br/>`,
+        <p>Add this candidate ?</p>
+        <strong>Nom :</strong> "${attendeeNameForAdd}"<br/>
+      `,
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "Oui, ajouter",
-      cancelButtonText: "Annuler",
+      confirmButtonText: "Yes, add",
+      cancelButtonText: "No, cancel",
     });
 
     // Si l'utilisateur annule, on stoppe ici
@@ -237,34 +238,34 @@ const EventDetail = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
-  if (!event) return <div>Aucun événement trouvé.</div>; //Evite une erreur si event est null
+  if (!event) return <div>No project found.</div>; //Evite une erreur si event est null
 
   return (
     <div className="event-detail-container">
       {modif ? (
         // Mode modification
         <div className="event-card-no-scale">
-          <h2>Modifier le projet</h2>
+          <h2 style={{ textAlign: "center" }}>Edit the project</h2>
           <form onSubmit={handleSubmitModif} className="form-modif">
             <div className="form-group">
-              <label htmlFor="eventName">Nom :</label>
+              <label htmlFor="eventName">Title :</label>
               <input type="text" id="eventName" value={name} onChange={(e) => setName(sanitizeInput(e.target.value))} className={isSubmitting && !name.trim() ? "input-error" : ""} />
-              {isSubmitting && !name.trim() && <p className="error-message">Le nom de l'événement est obligatoire</p>}
+              {isSubmitting && !name.trim() && <p className="error-message">Project name is required</p>}
             </div>
             <div className="form-group">
-              <label htmlFor="author">Auteur :</label>
+              <label htmlFor="author">Author :</label>
               <textarea value={author} rows="1" id="author" onChange={(e) => setAuthor(sanitizeInput(e.target.value))} className={isSubmitting && !author.trim() ? "input-error" : ""} />
-              {isSubmitting && !author.trim() && <p className="error-message">Le nom de l'auteur est obligatoire</p>}
+              {isSubmitting && !author.trim() && <p className="error-message">Author name is required</p>}
             </div>
             <div className="form-group">
               <label htmlFor="description">Description :</label>
               <textarea id="description" rows="15" value={description} onChange={(e) => setDescription(sanitizeInput(e.target.value))} className={isSubmitting && !description.trim() ? "input-error" : ""} />
-              {isSubmitting && !description.trim() && <p className="error-message">La description est obligatoire</p>}
+              {isSubmitting && !description.trim() && <p className="error-message">Description is required</p>}
             </div>
             <div className="form-actions">
-              <button type="submit">Enregistrer les modifications</button>
+              <button type="submit">Save</button>
               <button type="button" onClick={() => setModif(false)}>
-                Annuler
+                Cancel
               </button>
             </div>
           </form>
@@ -272,16 +273,16 @@ const EventDetail = () => {
       ) : (
         // Mode affichage
         <div className="event-card-no-scale">
-          <h1>{event.name}</h1>
-          <button className="edit-event-button" onClick={() => setModif(true)}>
-            Modifier le projet
-          </button>
+          <h1 className="link-event">{event.name.toUpperCase()}</h1>
           <p>
-            <strong>Auteur:</strong> {event.author}
+            <strong>Author:</strong> {event.author}
           </p>
           <p>
             <strong>Description:</strong> {event.description}
           </p>
+          <button className="edit-event-button" onClick={() => setModif(true)}>
+            Edit the project
+          </button>
           {/*
           <h3>Attendees:</h3>
           {Array.isArray(event.dates) && event.dates.length > 0 ? (
@@ -322,12 +323,11 @@ const EventDetail = () => {
           <h3 style={{ textAlign: "center" }}>Candidats</h3>
 
           <div className="participant-section">
-            {Array.isArray(event.dates) && event.dates.length > 0 ? (
               <table className="participant-table" cellPadding="5">
                 <thead>
                   <tr>
-                    <th>Candidat</th>
-                    <th>Action</th>
+                  <th>Candidate</th>
+                  <th style={{ width: "150px" }}>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -347,56 +347,50 @@ const EventDetail = () => {
                     if (attendeesMap.size === 0) {
                       return (
                         <tr>
-                          <td colSpan={event.dates.length + 1}>Aucun candidat</td>
-                        </tr>
+                        <td colSpan="2">No candidates</td>
+                      </tr>
                       );
                     }
                     return Array.from(attendeesMap.entries()).map(([name, availability], index) => (
                       <tr key={index} className="participant-row">
-                        <td>
+                        <td style={{ textAlign: "left", paddingLeft: "20px" }}>
                           <Link to="#" onClick={() => handleShowAttendeeDetails(name)}>
                             {name}
                           </Link>
                         </td>
-                            <td>
-                              <button type="button" onClick={(e) => handleDeleteAttendee(id, name, e)}>
-                                Supprimer
-                              </button>
-                            </td>
+                        <td>
+                          <button type="button" onClick={(e) => handleDeleteAttendee(id, name, e)}>
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     ));
                   })()}
                 </tbody>
               </table>
-            ) : (
-              <p>Aucune date disponible</p>
-            )}
-          </div>
+            </div>
          
           {/* Affichage du formulaire seulement si des dates sont disponibles */}
           {event.dates && event.dates.length > 0 && (
             <div className="attendee-form">
-              <h3>Ajouter un candidat</h3>
-              <form onSubmit={handleAddAttendee}>
-                <label>
-                  Nom :
-                  <input type="text" value={attendeeNameForAdd} onChange={(e) => setAttendeeNameForAdd(e.target.value)} />
-                  {isSubmitting && !attendeeNameForAdd && <p className="error-message">Le nom est obligatoire</p>}
-                </label>
-                <div className="button-group">
-                  <button type="submit">Ajouter un candidat</button>
-                  <button type="button" onClick={handleCancelAddAttendee}>
-                    Effacer
-                  </button>
+             <h3>Add a candidate</h3>
+            <form onSubmit={handleAddAttendee}>
+              <label>
+                Name :
+                <input type="text" value={attendeeNameForAdd} onChange={(e) => setAttendeeNameForAdd(e.target.value)} />
+                {isSubmitting && !attendeeNameForAdd && <p className="error-message">Name is required</p>}
+              </label>
+              <div className="button-group">
+                <button type="submit">Add a candidate</button>
+                <button type="button" onClick={handleCancelAddAttendee}>
+                  Clear
+                </button>
                 </div>
               </form>
             </div>
           )}
           <div className="back-link">
-            <Link to="/">
-              <br />
-              Retour à l'accueil
-            </Link>
+            <Link to="/">Back to home</Link>
           </div>
         </div>
       )}
