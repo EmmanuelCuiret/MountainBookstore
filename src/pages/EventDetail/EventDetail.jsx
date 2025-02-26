@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 const EventDetail = () => {
   const { id } = useParams(); // Récupère l'ID de l'événement depuis l'URL
-  const baseURL = "https://didlydoo-at29.onrender.com";
+  const baseURL = "https://mountain-djyn.onrender.com";
   //const baseURL = "http://localhost:3000";
   const sanitizeInput = (value) => value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'@-]/g, ""); //Filtre sur les caractères admis à la saisie
   const [noAttendee, setNoAttendee] = useState(true); //Pour la vérification qu'il y a au moins un participant d'inscrit à l'événement
@@ -108,7 +108,7 @@ const EventDetail = () => {
     e.preventDefault();
 
     // Vérifications
-    if (!attendeeNameForAdd || !attendeeNameForAdd.trim() || selectedDates.length === 0) {
+    if (!attendeeNameForAdd || !attendeeNameForAdd.trim()) {
       setIsSubmitting(true); // Active la validation
       return;
     }
@@ -118,9 +118,7 @@ const EventDetail = () => {
       title: "Confirmer l'ajout",
       html: `
         <p>Ajouter ce participant ?</p>
-        <strong>Nom :</strong> "${attendeeNameForAdd}"<br/>
-        <strong>Dates sélectionnées :</strong> ${selectedDates.map((d) => d.date).join(", ")}
-      `,
+        <strong>Nom :</strong> "${attendeeNameForAdd}"<br/>`,
       icon: "question",
       showCancelButton: true,
       confirmButtonText: "Oui, ajouter",
@@ -159,32 +157,6 @@ const EventDetail = () => {
     setSelectedDates([]);
     setIsSubmitting(false);
     setIsSubmittingNewDate(false);
-  };
-
-  //Permet l'ajout d'une nouvelle date à l'événement
-  const handleAddDate = async () => {
-    //Vérifie que la date n'est pas vide,
-    //Vérifie qu'elle n'est pas antérieure à la date du jour
-    if (!dateInput.trim() || new Date(dateInput) < new Date()) {
-      setIsSubmittingNewDate(true); //Activation du message d'erreur selon le cas rencontré
-      return;
-    }
-
-    //Confirmation de l'ajout de la nouvelle date à l'événement
-    const confirmAdd = window.confirm(`Ajouter cette date ? \n${dateInput}`);
-    if (!confirmAdd) return;
-
-    try {
-      const routeURL = `/api/events/${id}/add_dates`;
-      await axios.post(baseURL + routeURL, { dates: [dateInput] });
-      await fetchEvent(); // Rafraîchir les données après ajout
-      toast.success("Date ajoutée avec succès !");
-      setDateInput(""); //Réinitialiser le champ
-      setIsSubmittingNewDate(false);
-    } catch (error) {
-      console.error("Erreur lors de l'ajout de la date :", error);
-      toast.error("Erreur lors de l'ajout de la date.");
-    }
   };
 
   //Initialisation des états quand l'événement est chargé
@@ -228,21 +200,6 @@ const EventDetail = () => {
     }
   };
 
-  //Suppression d'une date à un événement
-  const handleDeleteEvenDate = async (eventId, dateToDelete, e) => {
-    e.preventDefault();
-    if (!window.confirm(`Supprimer la date : "${dateToDelete}" ?`)) return;
-
-    try {
-      const routeURL = `/api/events/delete/${eventId}/${dateToDelete}`;
-      await axios.delete(baseURL + routeURL);
-      toast.success("Date supprimée avec succès!");
-      await fetchEvent(); //Recharger les détails de l'événement
-    } catch (err) {
-      console.error("Erreur lors de la suppression de la date :", err.response?.data || err.message);
-      toast.error("Erreur lors de la suppression de la date.");
-    }
-  };
 
   const handleShowAttendeeDetails = async (name) => {
     try {
@@ -282,18 +239,6 @@ const EventDetail = () => {
   if (error) return <div>{error}</div>;
   if (!event) return <div>Aucun événement trouvé.</div>; //Evite une erreur si event est null
 
-  //Trouver la date avec le plus de personnes disponibles
-  //Récupère les résultats dans un tableau
-  //Test si une date a été ajoutée pour éviter une erreur
-  const availabilityCount = (event.dates || []).map((date) => ({
-    date: date.date,
-    availabilityCount: date.attendees.filter((attendee) => attendee.available).length,
-  }));
-
-  //Extraction du meilleur résultat
-  //Test si il existe un compteur à plus de 0 pour éviter une erreur
-  const bestDate = availabilityCount.length > 0 ? availabilityCount.reduce((max, curr) => (curr.availabilityCount > max.availabilityCount ? curr : max)) : null;
-
   return (
     <div className="event-detail-container">
       {modif ? (
@@ -307,14 +252,14 @@ const EventDetail = () => {
               {isSubmitting && !name.trim() && <p className="error-message">Le nom de l'événement est obligatoire</p>}
             </div>
             <div className="form-group">
-              <label htmlFor="description">Description :</label>
-              <textarea id="description" rows="15" value={description} onChange={(e) => setDescription(sanitizeInput(e.target.value))} className={isSubmitting && !description.trim() ? "input-error" : ""} />
-              {isSubmitting && !description.trim() && <p className="error-message">La description est obligatoire</p>}
-            </div>
-            <div className="form-group">
               <label htmlFor="author">Auteur :</label>
               <textarea value={author} rows="1" id="author" onChange={(e) => setAuthor(sanitizeInput(e.target.value))} className={isSubmitting && !author.trim() ? "input-error" : ""} />
               {isSubmitting && !author.trim() && <p className="error-message">Le nom de l'auteur est obligatoire</p>}
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Description :</label>
+              <textarea id="description" rows="15" value={description} onChange={(e) => setDescription(sanitizeInput(e.target.value))} className={isSubmitting && !description.trim() ? "input-error" : ""} />
+              {isSubmitting && !description.trim() && <p className="error-message">La description est obligatoire</p>}
             </div>
             <div className="form-actions">
               <button type="submit">Enregistrer les modifications</button>
@@ -413,13 +358,6 @@ const EventDetail = () => {
                             {name}
                           </Link>
                         </td>
-                        {event.dates.map((date, dateIndex) => (
-                          <td key={dateIndex} style={{ color: availability[date.date] ? "green" : "red" }}>
-                            <FontAwesomeIcon icon={availability[date.date] ? faCheck : faTimes} />
-                          </td>
-                        ))}
-
-          
                             <td>
                               <button type="button" onClick={(e) => handleDeleteAttendee(id, name, e)}>
                                 Supprimer

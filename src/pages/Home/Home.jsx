@@ -5,7 +5,7 @@ import "./Home.css";
 import "./Loading.css";
 
 function Home() {
-  const baseURL = "https://didlydoo-at29.onrender.com";
+  const baseURL = "https://mountain-djyn.onrender.com";
   //const baseURL = "http://localhost:3000";
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
@@ -94,10 +94,10 @@ function Home() {
   if (loading)
     return (
       <div id="loader">
-        <div class="spinner-container">
-          <svg class="text-circle" viewBox="0 0 100 100">
+        <div name="spinner-container">
+          <svg className ="text-circle" viewBox="0 0 100 100">
             <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" stroke="transparent" fill="none" />
-            <text stroke="black" stroke-width="2" fill="transparent">
+            <text stroke="black" strokeWidth="2" fill="transparent">
               {/*Contour du texte*/}
               <textPath href="#circlePath" startOffset="0%">
                 LOADING...
@@ -110,7 +110,7 @@ function Home() {
               </textPath>
             </text>
           </svg>
-          <div class="spinner"></div>
+          <div className ="spinner"></div>
         </div>
       </div>
     );
@@ -141,39 +141,37 @@ function Home() {
             <p>No projects found.</p>
           )}
         </div>
-      </div>
-
-      <br />
-      {/*
-      <Link to="#" onClick={handleShowAttendeeAndEvents}>
+        <Link to="#" onClick={handleShowAttendeeAndEvents}>
+        <br/>
         {showAttendees ? "Masquer la liste" : "Voir les candidatures"}
-      </Link>
+        </Link>
 
-      {showAttendees && (
-        <div className="participant-container">
-          <h2>Liste des candidatures</h2>
+        {showAttendees && (
+          <div className="participant-container">
+            <h2>Liste des candidatures</h2>
 
-          {loadingAttendees ? (
-            <p>Chargement des candidats...</p>
-          ) : attendeesAndEvents.length > 0 ? (
-            <div className="participant-grid">
-              {attendeesAndEvents.map((a, index) => (
-                <div key={index} className="participant-card">
-                  <strong>{a.name}</strong>
-                  <ul className="event-list">
-                    {a.events.map((event, eventIndex) => (
-                      <li key={eventIndex}>{event}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>Aucun candidat.</p>
-          )}
-        </div>
-      )}
-        */}
+            {loadingAttendees ? (
+              <p>Chargement des candidats...</p>
+            ) : attendeesAndEvents.length > 0 ? (
+              <div className="participant-grid">
+                {attendeesAndEvents.map((a, index) => (
+                  <div key={index} className="participant-card">
+                    <strong>{a.name}</strong>
+                    <ul className="event-list">
+                      {a.events.map((event, eventIndex) => (
+                        <li key={eventIndex}>{event}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Aucun candidat.</p>
+            )}
+          </div>
+        )}
+
+      </div>     
     </>
   );
 }
