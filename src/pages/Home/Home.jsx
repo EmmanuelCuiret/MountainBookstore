@@ -115,7 +115,7 @@ function Home() {
       });
   }, []);
 
-  if (loading)
+  if (!loading)
     return (
       <div id="loader">
         <div name="spinner-container">
