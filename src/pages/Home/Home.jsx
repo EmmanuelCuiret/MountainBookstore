@@ -4,6 +4,9 @@ import axios from "axios";
 import "./Home.css";
 import "./Loading.css";
 import Swal from "sweetalert2";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 
 function Home() {
   const baseURL = "https://mountain-djyn.onrender.com";
@@ -14,6 +17,44 @@ function Home() {
   const [attendeesAndEvents, setAttendeesAndEvents] = useState([]);
   const [showAttendees, setShowAttendees] = useState(false);
   const [loadingAttendees, setLoadingAttendees] = useState(false);
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+   // Ajouter un titre centré
+   const title = "List of mountain projects from the Hamilton 10 promotion";
+   doc.setFont("helvetica", "bold");
+   doc.setFontSize(16);
+ 
+   const pageWidth = doc.internal.pageSize.getWidth();
+   const textWidth = doc.getTextWidth(title);
+   const textX = (pageWidth - textWidth) / 2; // Centrage horizontal
+ 
+   doc.text(title, textX, 15);
+    const tableData = Object.entries(attendeesAndEvents).map(([event, participants]) => [
+      event.toUpperCase(),
+      participants.length > 0 ? participants.join(", ") : "No candidates",
+    ]);
+  
+    autoTable(doc, {
+      head: [["Project", "Candidates"]],
+      body: tableData,
+      startY: 22, // Pour éviter que le titre ne chevauche le tableau
+    });
+  
+  // Ajouter la date de génération en bas de page
+  const date = new Date().toLocaleDateString();
+  const footerText = `Generated on: ${date}`;
+
+  doc.setFontSize(10);
+  const footerWidth = doc.getTextWidth(footerText);
+  const footerX = (pageWidth - footerWidth) / 2; // Centrage
+
+  const pageHeight = doc.internal.pageSize.getHeight();
+  doc.text(footerText, footerX, pageHeight - 10); // Position en bas
+
+  doc.save("Projects_and_candidates.pdf");
+  };
+  
 
   //Calcul du nombre de participants pour un événement
   function getTotalParticipants(event) {
@@ -30,9 +71,7 @@ function Home() {
     });
   
     return uniqueParticipants.size;
-  }
-  
-  
+  }  
 
   //Suppression d'un événement
   const handleRemoveEvent = async (eventToRemove) => {
@@ -185,6 +224,7 @@ function Home() {
         {showAttendees && (
           <div className="participant-container">
             <h2>List of projects and candidates</h2>
+            <button onClick={exportToPDF}>Export to PDF</button>
 
             {loadingAttendees ? (
               <p>Loading candidates...</p>
