@@ -48,6 +48,11 @@ function Home() {
       await axios.delete(baseURL + routeURL);
       setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventToRemove.id));
       //alert("Projet supprimé avec succès !");
+
+      if (showAttendees) {
+        handleShowAttendeeAndEvents();        
+      }
+
     } catch (error) {
       console.error("Erreur lors de la suppression du projet: ", error);
       alert("Impossible de supprimer le projet.");
@@ -153,10 +158,12 @@ function Home() {
             <p>No projects found.</p>
           )}
         </div>
+        {events.length > 0 && (
         <Link to="#" onClick={handleShowAttendeeAndEvents}>
         <br/>
         {showAttendees ? "Hide list" : "View applications"}
         </Link>
+        )}
 
         {showAttendees && (
           <div className="participant-container">
@@ -168,7 +175,7 @@ function Home() {
               <div className="participant-grid">
                 {attendeesAndEvents.map((a, index) => (
                   <div key={index} className="participant-card">
-                    <strong>{a.name}</strong>
+                    <strong>{a.name.toUpperCase()}</strong>
                     <ul className="event-list">
                       {a.events.map((event, eventIndex) => (
                         <li key={eventIndex}>{event}</li>

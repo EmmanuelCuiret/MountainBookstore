@@ -156,10 +156,12 @@ a:hover {
 .participant-container h2 {
   font-size: 1.8rem;
   color: var(--accent-color);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
   text-transform: uppercase;
-  border-bottom: 2px solid var(--accent-color);
-  display: inline-block;
+  color: #bcdcf5;
+  -webkit-text-stroke: 1px #4836ad;
 }
 
 /* Grille des participants */
@@ -182,7 +184,7 @@ a:hover {
 }
 
 .participant-card:hover {
-  transform: scale(1.02);
+  transform: scale(1);
 }
 
 /* Nom du participant */
@@ -206,8 +208,8 @@ a:hover {
   padding: 8px;
   border-radius: 5px;
   font-size: 0.9rem;
-  color: var(--secondary-color);
   text-align: center;
+  color: #4836ad;
 }
 
 /* Responsive */

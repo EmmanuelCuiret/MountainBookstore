@@ -26,14 +26,17 @@ body {
 
 /* Conteneur principal de la page EventDetail */
 .event-detail-container {
-  max-width: px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
 
 /* Style de la carte principale affichant l'événement */
 .event-card,
-.event-card-no-scale {
+.event-card-no-scale,
+.participant-container,
+.participant-card {
+  max-width: 800px;
   background: var(--card-bg);
   border-radius: 10px;
   padding: 20px;
@@ -178,7 +181,7 @@ a:hover {
 }
 
 .error-message {
-  color: #ffa600;
+  color: red;
   font-size: 0.9rem;
   margin-top: 5px;
 }

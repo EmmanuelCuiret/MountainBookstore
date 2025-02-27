@@ -56,7 +56,7 @@ const CreateEvent = () => {
             onChange={(e) => setAuthor(sanitizeInput(e.target.value))} 
             className={isSubmitting && !author.trim() ? "input-error" : ""} 
           />
-          {isSubmitting && !author.trim() && <p className="error-message">Le nom de l'auteur est obligatoire</p>}
+          {isSubmitting && !author.trim() && <p className="error-message">Author name is required</p>}
         </div>
 
         <div>
@@ -68,7 +68,7 @@ const CreateEvent = () => {
             onChange={(e) => setName(sanitizeInput(e.target.value))} 
             className={isSubmitting && !name.trim() ? "input-error" : ""} 
           />
-          {isSubmitting && !name.trim() && <p className="error-message">Le nom de l'événement est obligatoire</p>}
+          {isSubmitting && !name.trim() && <p className="error-message">Project name is required</p>}
         </div>
 
         <div>
@@ -80,7 +80,7 @@ const CreateEvent = () => {
             onChange={(e) => setDescription(sanitizeInput(e.target.value))} 
             className={isSubmitting && !description.trim() ? "input-error" : ""} 
           />
-          {isSubmitting && !description.trim() && <p className="error-message">La description est obligatoire</p>}
+          {isSubmitting && !description.trim() && <p className="error-message">Description is required</p>}
         </div>
 
         <div className="buttons">

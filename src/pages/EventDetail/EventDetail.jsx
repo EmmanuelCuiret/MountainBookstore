@@ -113,7 +113,7 @@ const EventDetail = () => {
       return;
     }
 
-     // Demande de confirmation avec SweetAlert2
+     // Demande de confirmation d'ajout de candidat avec SweetAlert2
      const result = await Swal.fire({
       title: "Confirm addition",
       html: `
@@ -221,8 +221,22 @@ const EventDetail = () => {
   const handleDeleteAttendee = async (eventId, attendeeName, e) => {
     e.preventDefault();
 
-    if (!window.confirm(`Supprimer le participant : "${attendeeName}" ?`)) return;
+    const result = await Swal.fire({
+      title: "Confirm deletion",
+      html: `
+        <p>Are you sure you want to remove this candidate?</p>
+        <strong>Name:</strong> "${attendeeName}"<br/>
+      `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "No, cancel",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+    });
 
+    if (!result.isConfirmed) return;
+    
     try {
       const routeURL = `/api/events/${eventId}/attendees/${attendeeName}`;
       await axios.delete(baseURL + routeURL);

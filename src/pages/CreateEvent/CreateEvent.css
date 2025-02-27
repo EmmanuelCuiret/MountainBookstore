@@ -9,7 +9,7 @@
   }
   
   p.error-message {
-    color: #ffa600; /* Rouge adouci */
+    color: red;
     font-size: 0.8rem;
     margin-bottom: 5px;
   }
@@ -82,7 +82,8 @@
   }
   
   .error-message {
-    color: #e07a5f;
+    color: red;
+    font-weight: 600;
     font-size: 14px;
     margin-top: 5px;
     text-align: left;
